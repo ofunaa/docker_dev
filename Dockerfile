@@ -19,11 +19,16 @@ RUN /etc/init.d/mysqld restart
 RUN yum -y install mysql-devel
 
 # create user
-RUN useradd -m -s /bin/bash USER_NAME
-RUN echo 'set_pass_word' | passwd --stdin USER_NAME
+RUN useradd -m -s /bin/bash $USER_NAME
+RUN echo 'set_pass_word' | passwd --stdin $USER_NAME
+
+RUN sed -ri 's/^#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
+RUN /etc/init.d/sshd start
+
 
 # setup sudo config
-RUN echo "USER_NAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN echo "$USER_NAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # setup rbenv
 ## rben install
@@ -43,4 +48,8 @@ RUN echo 'export PATH="$HOME/.nodebrew/current/bin:$PATH"' >> ~/.bash_profile
 ## node install
 RUN ~/.nodebrew/current/bin/nodebrew install-binary stable
 RUN ~/.nodebrew/current/bin/nodebrew use stable
+
+EXPOSE 22
+
+CMD /sbin/init
 

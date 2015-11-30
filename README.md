@@ -14,7 +14,7 @@
 1. `cd `
 1. `source ~/.bash_profile`
 1. `cd /home/$USER_NAME`
-1. `gem install bundler`
+1. `gem install bundler --version=1.10.3`
 1. `npm install -g coffee-script`
 1. `git clone COWCAMO_GITHUB_URL`
 
