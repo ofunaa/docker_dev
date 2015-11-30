@@ -4,6 +4,8 @@
 FROM centos
 MAINTAINER takuji funao
 
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
 # install package
 RUN yum update -y
 RUN yum install -y vim git sudo passwd wget make gcc tar readline-devel
@@ -32,7 +34,7 @@ RUN git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 RUN git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 RUN echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-RUN /bin/bash -c "source ~/.bash_profile"
+RUN source ~/.bash_profile
 
 ## ruby install
 RUN rbenv install 2.2.0
