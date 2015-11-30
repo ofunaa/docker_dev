@@ -34,7 +34,7 @@ RUN git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/rub
 
 RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 RUN echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-RUN exec $SHELL -l
+RUN source ~/.bash_profile
 
 ## ruby install
 RUN rbenv install 2.2.0
