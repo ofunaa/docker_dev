@@ -1,7 +1,7 @@
 FROM centos
 MAINTAINER takuji funao
 
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+ARG USER_NAME
 
 # install package
 RUN yum update -y
