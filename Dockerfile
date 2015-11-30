@@ -1,3 +1,6 @@
+# docker build -t centos .
+
+
 FROM centos
 MAINTAINER takuji funao
 
@@ -9,9 +12,10 @@ RUN yum install -y ImageMagick ImageMagick-devel
 RUN yum install -y install libxml2 libxml2-devel libxslt libxslt-devel
 
 # install MySQL
-# RUN yum install -y mysql mysql-server
-# RUN chkconfig mysqld on
-# ENTRYPOINT /etc/init.d/mysqld start && /bin/bash
+RUN yum -y install http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+RUN yum info mysql-community-server
+RUN yum -y install mysql-community-server
+RUN /etc/init.d/mysqld restart
 
 # create user
 RUN useradd -m -s /bin/bash takuji #各自変更
@@ -25,15 +29,15 @@ RUN echo "takuji ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 RUN su takuji -c "git clone https://github.com/sstephenson/rbenv.git ~/.rbenv"
 RUN su takuji -c "git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build"
 
+
 RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 RUN echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 RUN exec $SHELL -l
 
-RUN chown takuji:takuji /home/takuji/.bashrc
 ## ruby install
-RUN su takuji -c "/home/takuji/.rbenv/bin/rbenv install 2.1.1"
-RUN su takuji -c "/home/takuji/.rbenv/bin/rbenv global 2.1.1"
-RUN su takuji -c "/home/takuji/.rbenv/shims/gem install bundle"
+RUN su takuji -c "rbenv install 2.2.0"
+RUN su takuji -c "rbenv global 2.2.0"
+RUN su takuji -c "gem install bundle"
 
 # setup nodebrew
 RUN su takuji -c "curl -L https://raw.githubusercontent.com/hokaccha/nodebrew/master/nodebrew | perl - setup"
