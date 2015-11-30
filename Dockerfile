@@ -1,6 +1,3 @@
-# docker build -t centos .
-
-
 FROM centos
 MAINTAINER takuji funao
 
@@ -22,11 +19,11 @@ RUN /etc/init.d/mysqld restart
 RUN yum -y install mysql-devel
 
 # create user
-RUN useradd -m -s /bin/bash takuji #各自変更
-RUN echo 'set_pass_word' | passwd --stdin takuji #各自変更
+RUN useradd -m -s /bin/bash $USER_NAME
+RUN echo 'set_pass_word' | passwd --stdin $USER_NAME
 
 # setup sudo config
-RUN echo "takuji ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+RUN echo "$USER_NAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # setup rbenv
 ## rben install
@@ -34,21 +31,16 @@ RUN git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 RUN git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 RUN echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-RUN source ~/.bash_profile
-RUN exec $SHELL
 
 ## ruby install
 RUN ~/.rbenv/bin/rbenv install 2.2.0
 RUN ~/.rbenv/bin/rbenv global 2.2.0
-RUN gem install bundle
 
 # setup nodebrew
 RUN curl -L https://raw.githubusercontent.com/hokaccha/nodebrew/master/nodebrew | perl - setup
 RUN echo 'export PATH="$HOME/.nodebrew/current/bin:$PATH"' >> ~/.bash_profile
-RUN /bin/bash -c "source ~/.bash_profile"
-RUN exec $SHELL
 
 ## node install
-RUN nodebrew install-binary stable
-RUN nodebrew use stable
-RUN npm install -g coffee-script
+RUN ~/.nodebrew/current/nodebrew install-binary stable
+RUN ~/.nodebrew/current/nodebrew use stable
+
