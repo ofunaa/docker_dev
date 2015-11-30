@@ -30,11 +30,9 @@ RUN echo "takuji ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 ## rben install
 RUN git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 RUN git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-
-
 RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 RUN echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-RUN source ~/.bash_profile
+RUN /bin/bash -c "source ~/.bash_profile"
 
 ## ruby install
 RUN rbenv install 2.2.0
@@ -44,7 +42,7 @@ RUN gem install bundle
 # setup nodebrew
 RUN curl -L https://raw.githubusercontent.com/hokaccha/nodebrew/master/nodebrew | perl - setup
 RUN echo 'export PATH="$HOME/.nodebrew/current/bin:$PATH"' >> ~/.bash_profile
-RUN source ~/.bash_profile
+RUN /bin/bash -c "source ~/.bash_profile"
 
 ## node install
 RUN nodebrew install-binary stable
