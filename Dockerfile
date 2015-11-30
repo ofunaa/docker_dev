@@ -37,8 +37,8 @@ RUN echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 RUN source ~/.bash_profile
 
 ## ruby install
-RUN rbenv install 2.2.0
-RUN rbenv global 2.2.0
+RUN /bin/sh -c rbenv install 2.2.0
+RUN /bin/sh -c rbenv global 2.2.0
 RUN gem install bundle
 
 # setup nodebrew
