@@ -17,6 +17,7 @@ RUN yum info mysql-community-server
 RUN yum -y install mysql-community-server
 RUN /etc/init.d/mysqld restart
 RUN yum -y install mysql-devel
+RUN yum -y install initscripts MAKEDEV
 
 # create user
 RUN useradd -m -s /bin/bash $USER_NAME
