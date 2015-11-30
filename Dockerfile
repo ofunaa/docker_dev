@@ -31,9 +31,11 @@ RUN echo "takuji ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 # setup rbenv
 ## rben install
 RUN git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
-RUN git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
-RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile &&  export PATH="$HOME/.rbenv/bin:$PATH"
 RUN echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+
+
+RUN git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
 RUN source ~/.bash_profile
 RUN exec $SHELL
 
