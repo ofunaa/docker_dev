@@ -9,7 +9,7 @@
 1. `docker-machine ssh dev`
 1. `git clone https://github.com/takujifunao/docker_dev.git`
 1. `cd docker_dev`
-1. `docker build -t rails:dev .`
+1. `docker build --build-arg USER_NAME=hogehoge -t rails:dev .` ※hogehogeを変更
 1. `docker run`
 1. `cd `
 1. `source ~/.bash_profile`
