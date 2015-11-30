@@ -4,6 +4,7 @@ MAINTAINER takuji funao
 ARG USER_NAME
 
 # install package
+RUN yum install -y initscripts MAKEDEV
 RUN yum update -y
 RUN yum install -y vim git sudo passwd wget make gcc tar readline-devel
 RUN yum install -y openssl-devel openssh openssh-server openssh-clients
@@ -17,7 +18,6 @@ RUN yum info mysql-community-server
 RUN yum -y install mysql-community-server
 RUN /etc/init.d/mysqld restart
 RUN yum -y install mysql-devel
-RUN yum -y install initscripts MAKEDEV
 
 # create user
 RUN useradd -m -s /bin/bash $USER_NAME
