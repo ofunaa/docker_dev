@@ -9,7 +9,8 @@ RUN yum install -y vim git sudo passwd wget make gcc tar readline-devel
 RUN yum install -y openssl-devel openssh openssh-server openssh-clients
 RUN yum install -y ImageMagick ImageMagick-devel
 RUN yum install -y install libxml2 libxml2-devel libxslt libxslt-devel
-RUN yum install -y libffi-devel.x86_64 systemd
+RUN yum install -y libffi-devel.x86_64
+RUN yum swap -y fakesystemd systemd initscripts
 
 # install MySQL
 RUN yum -y install http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
