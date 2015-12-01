@@ -22,7 +22,6 @@
 1. `bundle config build.nokogiri --use-system-libraries`
 1. `bundle install`
 1. `bundle exec sidekiq -d -q default event`
-1. `cp .env.sample .env`
 1. `vim .env`
 1. `DATABASE_HOST='0.0.0.0'` に変更する
 1. `rake db:create` *動かない場合は`/etc/init.d/mysqld restart`
