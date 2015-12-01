@@ -1,4 +1,4 @@
-FROM centos:centos6
+FROM centos:centos7
 MAINTAINER takuji funao
 
 ARG USER_NAME
@@ -25,7 +25,7 @@ RUN echo 'set_pass_word' | passwd --stdin $USER_NAME
 
 RUN sed -ri 's/^#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
-RUN /etc/init.d/sshd start
+RUN systemctl start sshd.service
 
 # setup sudo config
 RUN echo "$USER_NAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
