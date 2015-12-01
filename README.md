@@ -13,7 +13,7 @@
 1. `docker run -v YOURPROJECT_PATH:/home/YOURNAME/ -d -P --name rails_go rails_dev:dev` 例）docker run -v /Users/takujifunao/Hack/03_tsukuruba/cowcamo-rails:/home/takuji/ -d -P --name railstest2 rails_dev:dev
 1. `docker port rails_go 22`
 1. `docker-machine ip dev`
-1. `ssh root@xxx.xxx.xx.xxx -p xxxxx` *`docker-machine ip dev`と`docker port rails_go 22`
+1. `ssh root@xxx.xxx.xx.xxx -p xxxxx` ※以下のコマンドで取得`docker-machine ip dev`と`docker port rails_go 22`
 1. `source ~/.bash_profile`
 1. `cd /home/$USER_NAME`
 1. `gem install bundler --version=1.10.3`
