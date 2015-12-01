@@ -23,13 +23,13 @@ RUN useradd -m -s /bin/bash $USER_NAME
 RUN echo 'set_pass_word' | passwd --stdin $USER_NAME
 
 # Set up SSH
-RUN	mkdir -p /home/$USER_NAME/.ssh; chown docker /home/docker/.ssh; chmod 700 /home/docker/.ssh && \
+RUN	mkdir -p /home/$USER_NAME/.ssh; chown $USER_NAME /home/$USER_NAME/.ssh; chmod 700 /home/$USER_NAME/.ssh && \
 	echo "公開鍵" > /home/$USER_NAME/.ssh/authorized_keys && \
-	chown docker /home/$USER_NAME/.ssh/authorized_keys && \
+	chown $USER_NAME /home/$USER_NAME/.ssh/authorized_keys && \
 	chmod 600 /home/$USER_NAME/.ssh/authorized_keys
 
 # setup sudo config
-RUN echo "$USER_NAME ALL=(ALL) ALL" >> /etc/sudoers.d/docker
+RUN echo "$USER_NAME ALL=(ALL) ALL" >> /etc/sudoers.d/$USER_NAME
 
 # Set up SSHD config
 
