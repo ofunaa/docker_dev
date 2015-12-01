@@ -20,7 +20,7 @@ RUN /etc/init.d/mysqld restart
 RUN yum -y install mysql-devel
 
 # install redis
-# RUN yum -y install redis-server
+RUN yum -y install redis
 
 # create user
 RUN useradd -m -s /bin/bash $USER_NAME
