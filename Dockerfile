@@ -29,7 +29,7 @@ RUN chkconfig redis on
 RUN useradd -m -s /bin/bash $USER_NAME
 RUN echo 'set_pass_word' | passwd --stdin $USER_NAME
 
-RUN echo '$USER_NAME:screencast' | chpasswd
+RUN echo 'root:screencast' | chpasswd
 RUN sed -ri 's/^#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 RUN /etc/init.d/sshd start
