@@ -4,7 +4,6 @@ MAINTAINER takuji funao
 ARG USER_NAME
 
 # install package
-RUN yum -y install systemd-libs systemd-sysv
 RUN yum update -y
 RUN yum install -y vim git sudo passwd wget make gcc tar readline-devel
 RUN yum install -y openssl-devel openssh openssh-server openssh-clients
