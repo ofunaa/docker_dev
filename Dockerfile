@@ -16,14 +16,20 @@ RUN yum install -y libffi-devel.x86_64
 RUN yum -y install http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
 RUN yum info mysql-community-server
 RUN yum -y install mysql-community-server
-RUN /etc/init.d/mysqld restart
 RUN yum -y install mysql-devel
+RUN /etc/init.d/mysqld restart
+
+# install redis
+RUN rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+RUN yum --enablerepo=epel -y install redis
+RUN /etc/init.d/redis start
+RUN chkconfig redis on
 
 # create user
 RUN useradd -m -s /bin/bash $USER_NAME
 RUN echo 'set_pass_word' | passwd --stdin $USER_NAME
 
-RUN echo 'root:screencast' | chpasswd
+RUN echo '$USER_NAME:hogehoge' | chpasswd
 RUN sed -ri 's/^#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 RUN /etc/init.d/sshd start
@@ -51,7 +57,7 @@ RUN echo 'export PATH="$HOME/.nodebrew/current/bin:$PATH"' >> ~/.bash_profile
 RUN ~/.nodebrew/current/bin/nodebrew install-binary stable
 RUN ~/.nodebrew/current/bin/nodebrew use stable
 
-EXPOSE 22
+EXPOSE 22 3000
 
 CMD /sbin/init
 
