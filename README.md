@@ -14,7 +14,6 @@
 1. `docker port rails_go 22`
 1. `docker-machine ip dev`
 1. `ssh root@xxx.xxx.xx.xxx -p xxxxx` ※以下のコマンドで取得`docker-machine ip dev`と`docker port rails_go 22`
-1. `source ~/.bash_profile`
 1. `cd /home/$USER_NAME`
 1. `gem install bundler --version=1.10.3`
 1. `gem install rbenv-rehash`
