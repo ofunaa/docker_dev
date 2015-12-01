@@ -19,10 +19,14 @@ RUN yum -y install mysql-community-server
 RUN /etc/init.d/mysqld restart
 RUN yum -y install mysql-devel
 
+# install redis
+RUN yum -y install redis-server
+
 # create user
 RUN useradd -m -s /bin/bash $USER_NAME
 RUN echo 'set_pass_word' | passwd --stdin $USER_NAME
 
+RUN echo 'root:screencast' | chpasswd
 RUN sed -ri 's/^#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 RUN /etc/init.d/sshd start
@@ -34,6 +38,7 @@ RUN echo "$USER_NAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 ## rben install
 RUN git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 RUN git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+RUN git clone git://github.com/jf/rbenv-gemset.git $HOME/.rbenv/plugins/rbenv-gemset
 RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 RUN echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 
