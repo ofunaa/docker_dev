@@ -1,16 +1,16 @@
-FROM centos:centos7
+FROM centos:centos6
 MAINTAINER takuji funao
 
 ARG USER_NAME
 
 # install package
+RUN yum install -y initscripts MAKEDEV
 RUN yum update -y
 RUN yum install -y vim git sudo passwd wget make gcc tar readline-devel
 RUN yum install -y openssl-devel openssh openssh-server openssh-clients
 RUN yum install -y ImageMagick ImageMagick-devel
 RUN yum install -y install libxml2 libxml2-devel libxslt libxslt-devel
 RUN yum install -y libffi-devel.x86_64
-RUN yum swap -y fakesystemd systemd initscripts
 
 # install MySQL
 RUN yum -y install http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
@@ -23,21 +23,12 @@ RUN yum -y install mysql-devel
 RUN useradd -m -s /bin/bash $USER_NAME
 RUN echo 'set_pass_word' | passwd --stdin $USER_NAME
 
-# Set up SSH
-RUN	mkdir -p /home/$USER_NAME/.ssh; chown $USER_NAME /home/$USER_NAME/.ssh; chmod 700 /home/$USER_NAME/.ssh && \
-	echo "公開鍵" > /home/$USER_NAME/.ssh/authorized_keys && \
-	chown $USER_NAME /home/$USER_NAME/.ssh/authorized_keys && \
-	chmod 600 /home/$USER_NAME/.ssh/authorized_keys
+RUN sed -ri 's/^#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
+RUN /etc/init.d/sshd start
 
 # setup sudo config
-RUN echo "$USER_NAME ALL=(ALL) ALL" >> /etc/sudoers.d/$USER_NAME
-
-# Set up SSHD config
-
-RUN sed -ri 's/#PermitRootLogin yes/PermitRootLogin yes/g' /etc/ssh/sshd_config && \
-    sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config && \
-    sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config && \
-    sed -i -e 's/^\(session.*pam_loginuid.so\)/#\1/g' /etc/pam.d/sshd
+RUN echo "$USER_NAME ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # setup rbenv
 ## rben install
