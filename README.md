@@ -1,16 +1,36 @@
 ## 手順
 
+### VirtualBoxをダウンロード
+
+- 通常の方法でVirtualBoxをインストール
+http://pc-karuma.net/mac-virtualbox-install/
+
+- brewでVirtualBoxインストール
+http://yamacent.hatenablog.com/entry/2015/05/06/233618
+
+
+### Dockerをダウンロード
+
 1. `brew update`
 1. `brew tap homebrew/binary`
 1. `brew install docker docker-machine`
+
+### dockerを起動し、仮想の中に入る
+
 1. `docker-machine create --driver virtualbox dev`
 1. `docker-machine env dev`
 1. `eval "$(docker-machine env dev)"`
 1. `docker-machine ssh dev`
+
+### 仮想の中でdockerファイルをダウンロードし、環境設定して、ローカルプロジェクトと同期
+
 1. `git clone https://github.com/takujifunao/docker_dev.git`
 1. `cd docker_dev`
 1. `docker build --build-arg USER_NAME=hogehoge -t rails_dev:dev .` ※hogehogeを変更
 1. `docker run -v YOURPROJECT_PATH:/home/YOURNAME/ -d -P --name rails_go rails_dev:dev` 例）docker run -v /Users/takujifunao/Hack/03_tsukuruba/cowcamo-rails:/home/takuji/ -d -P --name railstest2 rails_dev:dev
+
+
+
 1. `docker port rails_go 22`
 1. `docker-machine ip dev`
 1. `ssh root@xxx.xxx.xx.xxx -p xxxxx` *`docker-machine ip dev`と`docker port rails_go 22`
