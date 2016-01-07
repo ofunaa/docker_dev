@@ -44,7 +44,6 @@ RUN git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/rub
 RUN git clone git://github.com/jf/rbenv-gemset.git $HOME/.rbenv/plugins/rbenv-gemset
 RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
 RUN echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-RUN rbenv install -l
 
 ## ruby install
 RUN ~/.rbenv/bin/rbenv install 2.2.0
