@@ -4,6 +4,8 @@ MAINTAINER takuji funao
 ARG USER_NAME
 
 # install package
+RUN yum install -y initscripts MAKEDEV
+RUN yum update -y
 RUN yum install -y vim git sudo passwd wget make gcc tar readline-devel gcc-c++
 RUN yum install -y openssl-devel openssh openssh-server openssh-clients
 RUN yum install -y ImageMagick ImageMagick-devel
