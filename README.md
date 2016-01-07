@@ -33,8 +33,7 @@ http://yamacent.hatenablog.com/entry/2015/05/06/233618
 
 1. `docker port rails_go 22`
 1. `docker-machine ip dev`
-1. `ssh root@xxx.xxx.xx.xxx -p xxxxx` *`docker-machine ip dev`と`docker port rails_go 22`
-1. `source ~/.bash_profile`
+1. `ssh root@xxx.xxx.xx.xxx -p xxxxx` ※以下のコマンドで取得`docker-machine ip dev`と`docker port rails_go 22`
 1. `cd /home/$USER_NAME`
 1. `gem install bundler --version=1.10.3`
 1. `gem install rbenv-rehash`
@@ -42,7 +41,6 @@ http://yamacent.hatenablog.com/entry/2015/05/06/233618
 1. `bundle config build.nokogiri --use-system-libraries`
 1. `bundle install`
 1. `bundle exec sidekiq -d -q default event`
-1. `cp .env.sample .env`
 1. `vim .env`
 1. `DATABASE_HOST='0.0.0.0'` に変更する
 1. `rake db:create` *動かない場合は`/etc/init.d/mysqld restart`
